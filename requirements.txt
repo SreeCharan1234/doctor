@@ -3,3 +3,14 @@ sentence-transformers
 torch
 requests
 scikit-learn
+gunicorn
+itsdange 
+Jinja2
+MarkupSafe
+packaging
+Werkzeug
+itsdangerous
+click
+blinker
+numpy
+scipy   
