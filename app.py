@@ -6,7 +6,7 @@ import random
 
 app = Flask(__name__)
 
-# Load the Sentence Transformer model (you only need to do this once)
+
 model = SentenceTransformer('all-mpnet-base-v2')
 
 def get_agricultural_company_text(products=None):
