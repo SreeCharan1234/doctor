@@ -3,3 +3,4 @@ sentence-transformers
 torch
 requests
 scikit-learn
+gunicorn
