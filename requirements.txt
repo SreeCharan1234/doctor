@@ -1,0 +1,5 @@
+Flask
+sentence-transformers
+torch
+requests
+scikit-learn
