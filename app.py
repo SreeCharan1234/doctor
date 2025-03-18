@@ -1,7 +1,10 @@
-import random
+from flask import Flask, request, jsonify
 from sentence_transformers import SentenceTransformer, util
 import torch
 import re
+import random
+
+app = Flask(__name__)
 
 # Load the Sentence Transformer model (you only need to do this once)
 model = SentenceTransformer('all-mpnet-base-v2')
@@ -68,17 +71,29 @@ def process_query(company_text, user_query, product_list):
 
     return final_score, keyword_matches, intent
 
-# Example Usage:
-random_products = get_random_products()
-company_description = get_agricultural_company_text(random_products)
+@app.route('/query', methods=['POST'])
+def handle_query():
+    """Handles user queries via POST request."""
+    try:
+        data = request.get_json()
+        user_query = data['query']
 
-user_query = input("Enter your agricultural query: ")
+        random_products = get_random_products()
+        company_description = get_agricultural_company_text(random_products)
 
-final_score, keyword_matches, intent = process_query(company_description, user_query, random_products)
+        final_score, keyword_matches, intent = process_query(company_description, user_query, random_products)
 
-print(f"\nUser Query: {user_query}")
-print(f"Similarity Score: {final_score}")
-print(f"Keyword Matches: {keyword_matches}")
-print(f"Intent: {intent}")
-print("\nCompany Description:")
-print(company_description)
+        response = {
+            'user_query': user_query,
+            'similarity_score': final_score,
+            'keyword_matches': keyword_matches,
+            'intent': intent,
+            'company_description': company_description
+        }
+        return jsonify(response)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True) #remove debug=true when in production.
