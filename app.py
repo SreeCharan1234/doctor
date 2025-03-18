@@ -80,14 +80,6 @@ def handle_query():
         data = request.get_json()
         user_query = data['query']
 
-<<<<<<< HEAD
-@app.route('/query', methods=['POST'])
-def handle_query():
-    """Handles user queries via POST request."""
-    try:
-        data = request.get_json()
-        user_query = data['query']
-
         random_products = get_random_products()
         company_description = get_agricultural_company_text(random_products)
 
@@ -105,24 +97,4 @@ def handle_query():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-if __name__ == '__main__':
-    app.run(debug=True) #remove debug=true when in production.
-=======
-        random_products = get_random_products()
-        company_description = get_agricultural_company_text(random_products)
-
-        final_score, keyword_matches, intent = process_query(company_description, user_query, random_products)
-
-        response = {
-            'user_query': user_query,
-            'similarity_score': final_score,
-            'keyword_matches': keyword_matches,
-            'intent': intent,
-            'company_description': company_description
-        }
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-
->>>>>>> 4079962f729239949ea5775d482eec8e2f5c002b
+app.run()
